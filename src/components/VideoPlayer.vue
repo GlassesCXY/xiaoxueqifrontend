@@ -5,41 +5,58 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
-
 export default {
+    props: {
+        websocketUrl: {
+            type: String,
+            required: true
+        }
+    },
     data() {
         return {
             videoSrc: '',
             socket: null,
         };
     },
+    watch: {
+        websocketUrl: 'initializeWebSocket'
+    },
     mounted() {
-        this.socket = new WebSocket('ws://localhost:8080'); // 使用WebSocket连接
-
-        this.socket.onopen = () => {
-            console.log('Connected to the WebSocket server.');
-        };
-
-        this.socket.onmessage = (event) => {
-            const imgBlob = new Blob([event.data], { type: 'image/jpeg' });
-            const imgUrl = URL.createObjectURL(imgBlob);
-            this.videoSrc = imgUrl;
-        };
-
-        this.socket.onerror = (error) => {
-            console.error('WebSocket Error:', error);
-        };
-
-        this.socket.onclose = () => {
-            console.log('Disconnected from the WebSocket server.');
-        };
+        this.initializeWebSocket(this.websocketUrl);
     },
     beforeDestroy() {
         if (this.socket) {
             this.socket.close();
         }
     },
+    methods: {
+        initializeWebSocket(url) {
+            if (this.socket) {
+                this.socket.close();
+            }
+
+            this.socket = new WebSocket(url);
+
+            this.socket.onopen = () => {
+                console.log('Connected to the WebSocket server.');
+            };
+
+            this.socket.onmessage = (event) => {
+                console.log('Received message from WebSocket');
+                const imgBlob = new Blob([event.data], { type: 'image/jpeg' });
+                const imgUrl = URL.createObjectURL(imgBlob);
+                this.videoSrc = imgUrl;
+            };
+
+            this.socket.onerror = (error) => {
+                console.error('WebSocket Error:', error);
+            };
+
+            this.socket.onclose = () => {
+                console.log('Disconnected from the WebSocket server.');
+            };
+        }
+    }
 };
 </script>
 
@@ -47,13 +64,11 @@ export default {
 #imageContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
 }
 
 img {
-    max-width: 100%;
-    max-height: 90vh;
+    max-width: 70vw;
+    max-height: 70vh;
 }
 </style>
