@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user",
         sessionStorage.setItem("UserId", newUserId);
     }
 
-
+  //使用token进行权限控制，并及时释放存储的token
 
 
     const setContentId=(Id) =>{
