@@ -39,7 +39,7 @@ export default {
             this.inputMessage = '';
         },
         async callAPI(content) {
-
+        //调用api完成智慧养老系统的大模型的接入
 
             try {
                 const url = 'http://localhost:5001/api/generate-text';
