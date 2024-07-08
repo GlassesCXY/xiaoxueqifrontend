@@ -1,17 +1,16 @@
 <template>
     <div>
-        <el-table :data="emotions" style="width: 100%">
-            <el-table-column prop="eid" label="ID" width="80"></el-table-column>
-            <el-table-column prop="type" label="Type"></el-table-column>
-            <el-table-column prop="emotionDate" label="Date">
+        <el-table :data="strangers" style="width: 100%">
+            <el-table-column prop="sid" label="ID" width="80"></el-table-column>
+            <el-table-column prop="detectDate" label="Detect Date">
                 <template #default="scope">
-                    <span>{{ formatDate(scope.row.emotionDate) }}</span>
+                    <span>{{ formatDate(scope.row.detectDate) }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="Actions" width="150">
                 <template #default="scope">
-                    <el-button @click="deleteEmotion(scope.row.eid)" type="danger" size="mini">Delete</el-button>
-                    <el-button @click="viewImage(scope.row.eid, 'emotion')" type="primary" size="mini">View</el-button>
+                    <el-button @click="deleteStranger(scope.row.sid)" type="danger" size="mini">Delete</el-button>
+                    <el-button @click="viewImage(scope.row.sid, 'stranger')" type="primary" size="mini">View</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -36,7 +35,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 
-const emotions = ref([]);
+const strangers = ref([]);
 const total = ref(0);
 const currentPage = ref(1);
 const pageSize = ref(10);
@@ -45,22 +44,22 @@ const imageUrl = ref('');
 
 const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:9090/api/emotion/list', {
+        const response = await axios.get('http://localhost:9090/api/stranger/list', {
             params: {
                 page: currentPage.value,
                 size: pageSize.value
             }
         });
-        emotions.value = response.data.emotions;
+        strangers.value = response.data.strangers;
         total.value = response.data.total;
     } catch (error) {
         console.error(error);
     }
 };
 
-const deleteEmotion = async (eid) => {
+const deleteStranger = async (sid) => {
     try {
-        await axios.delete(`http://localhost:9090/api/emotion/${eid}`);
+        await axios.delete(`http://localhost:9090/api/stranger/${sid}`);
         ElMessage.success('Record deleted successfully');
         fetchData();
     } catch (error) {

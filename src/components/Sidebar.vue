@@ -28,8 +28,19 @@
                     <span>情绪记录</span>
                 </template>
                 <el-menu-item index="/home/Record" style="font-size:small;padding-left:65px" @click="handleRecord"> 负面情绪记录</el-menu-item>
+                <el-menu-item index="/home/Record" style="font-size:small;padding-left:65px" @click="handleCount"> 情感统计</el-menu-item>
+
             </el-sub-menu>
-            <el-sub-menu index="3">
+            <el-sub-menu index="3" >
+                <template #title>
+                    <el-icon>
+                        <location/>
+                    </el-icon>
+                    <span>跌倒记录</span>
+                </template>
+                <el-menu-item index="/home/fall" style="font-size:small;padding-left:65px" @click="handleFall"> 跌倒记录</el-menu-item>
+            </el-sub-menu>
+            <el-sub-menu index="4">
                 <template #title>
                     <el-icon>
                         <MessageBox/>
@@ -41,19 +52,19 @@
 
                 </el-menu-item-group>
             </el-sub-menu>
-            <el-sub-menu index="4">
+            <el-sub-menu index="5">
                 <template #title>
                     <el-icon>
                         <User/>
                     </el-icon>
                     <span>人脸识别</span>
                 </template>
-                <el-menu-item index="4-1" style="font-size:small;padding-left:65px" @click="handleOutBound"> 陌生人记录</el-menu-item>
-                <el-menu-item index="4-2" style="font-size:small;padding-left:65px" @click="handleManage">人脸管理</el-menu-item>
+                <el-menu-item index="5-1" style="font-size:small;padding-left:65px" @click="handleOutBound"> 陌生人记录</el-menu-item>
+                <el-menu-item index="5-2" style="font-size:small;padding-left:65px" @click="handleManage">人脸管理</el-menu-item>
             </el-sub-menu>
-            <el-menu-item @click="handleCar">
+            <el-menu-item @click="handleChat">
                 <template #title>
-                    <span>用户管理</span>
+                    <span>智慧助手</span>
                 </template>
             </el-menu-item>
 
@@ -86,15 +97,19 @@ const handleClose = (key: string, keyPath: string[]) => {
     // console.log(key, keyPath)
 }
 
+const handleFall = ()=>{
+    router.push('/home/fall/records')
+}
+
 
 const handleRecord = () => {
     router.push('/home/emotion/records');
 }
 const handleOutBound = () => {
-    router.push('/home/outBound');
+    router.push('/home/face/stranger');
 }
 const handleStorage = () => {
-    router.push('/home/storage');
+    router.push('/home/event/records');
 }
 const handleMonitor = () => {
     router.push('/home/monitor');
@@ -104,8 +119,12 @@ const handleManage = ()=>{
     router.push('/home/face/manage')
 }
 
-const handleCar =() => {
-    router.push('/home/car');
+const handleChat =() => {
+    router.push('/home/chat');
+}
+
+const handleCount = ()=>{
+    router.push('/home/emotion/count')
 }
 
 </script>

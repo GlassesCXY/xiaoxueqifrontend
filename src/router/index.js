@@ -43,6 +43,31 @@ const router = createRouter({
           path:"/home/emotion/records",
           name:"emotionRecords",
           component:()=>import("../views/EmotionRecord.vue")
+        },
+        {
+          path:"/home/face/stranger",
+          name:"StrangerRecord",
+          component:()=>import("../views/StrangerRecord.vue")
+        },
+        {
+          path:"/home/fall/records",
+          name:"fallrecord",
+          component:()=>import("../views/FallRecord.vue")
+        },
+        {
+          path:"/home/event/records",
+          name:"event",
+          component:()=>import("../views/EventsRecord.vue")
+        },
+        {
+          path:"/home/chat",
+          name:"chat",
+          component:()=>import("../views/Chat.vue")
+        },
+        {
+          path:"/home/emotion/count",
+          name:"count",
+          component:()=>import("../components/Echart.vue")
         }
       ],
     },
